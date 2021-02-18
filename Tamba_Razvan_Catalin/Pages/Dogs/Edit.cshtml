@@ -1,0 +1,78 @@
+﻿@page
+@model Tamba_Razvan_Catalin.Pages.Dogs.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Dog</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Dog.ID" />
+            <div class="form-group">
+                <label asp-for="Dog.Nume" class="control-label"></label>
+                <input asp-for="Dog.Nume" class="form-control" />
+                <span asp-validation-for="Dog.Nume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Dog.Sex" class="control-label"></label>
+                <input asp-for="Dog.Sex" class="form-control" />
+                <span asp-validation-for="Dog.Sex" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Dog.Varsta" class="control-label"></label>
+                <input asp-for="Dog.Varsta" class="form-control" />
+                <span asp-validation-for="Dog.Varsta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <label asp-for="Dog.DonorID" class="control-label">Donor Name</label>
+            <select asp-for="Dog.DonorID" class="form-control" asp-items="ViewBag.DonorID"></select>
+            <span asp-validation-for="Dog.DonorID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="table">
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+
+                                foreach (var cat in Model.AssignedBreedDataList)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                        @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedBreeds"
+                                               value="@cat.BreedID"
+                                               @(Html.Raw(cat.Assigned ? "checked=\"checked\"" : "")) />
+                                               @cat.BreedID @: @cat.Name
+                                    @:</td>
+                                }
+                                @:</tr>
+                             }
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

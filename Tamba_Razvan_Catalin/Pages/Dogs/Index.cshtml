@@ -1,0 +1,79 @@
+﻿@page "/{id:int?}"
+@model Tamba_Razvan_Catalin.Pages.Dogs.IndexModel
+
+@{
+    ViewData["Title"] = "Dogs";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Insert New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Dog[0].Nume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dog[0].Sex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dog[0].Varsta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dog[0].CheckInDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dog[0].Donor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dog[0].DogBreeds)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.DogD.Dogs) {
+
+    string selectedRow = "";
+    if (item.ID == Model.DogID)
+    {
+        selectedRow = "table-success";
+    }
+
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.Nume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sex)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Varsta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckInDate)
+             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Donor.DonorName)
+            </td>
+            <td>
+                @{ 
+                    foreach (var category in item.DogBreeds)
+                    {
+                        @category.Breed.ID @: @category.Breed.BreedName <br/>
+                    }
+                }
+            </td>
+
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
